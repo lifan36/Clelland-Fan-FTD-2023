@@ -45,21 +45,27 @@ ggsave("genotype_seurat_clusters_distribution_new.pdf",plot=last_plot(),
 
 View(table(PGRN$seurat_clusters))
 
+# Figure 4A
+pdf("umap.pdf", width=5, height=4)
+DimPlot(PGRN, reduction = "umap", label = T)
+dev.off()
 
+# Figure 4B
 pdf("annotation_1.pdf", width=11, height=4.5)
 DotPlot(PGRN, features = c("Plp1", "Mbp", "Mobp","Gpc5", "Plpp3","Pla2g7", "Snap25", "Cdh18","Sgcz","Kcnip4","Ntng1","Kcnc2",
                              "Cx3cr1", "P2ry12", "Csf1r","Vcan", "Pdgfra", "mt-Co3","mt-Atp6","Ttr", "Htr2c","Kcnq5","Dlgap2","Meis2",
                              "Nwd2","Kctd8","Scube1","Hs3st4","Foxp2","Lypd6b","Cped1","Lama1","Atp13a5","Ebf1","Kcnmb2","Kcnip1")) + RotatedAxis()
 dev.off()
 
+# Figure 4C
 pdf("umap_by_condition.pdf", width=11.5, height=2.6)
 DimPlot(PGRN, reduction = "umap", split.by = "Condition", ncol = 6, label = T)
 dev.off()
 
-
+# Figure S2A, B
 Idents(PGRN) <- "seurat_clusters"
 DefaultAssay(PGRN) <- "RNA"
-VlnPlot(PGRN, features = c("Mertk"), split.by = "Condition")
-VlnPlot(PGRN, features = c("Mertk"), split.by = "Condition", pt.size = 0)
+VlnPlot(PGRN, features = c("Mertk", "Axl"), split.by = "Condition", ncol=1)
+VlnPlot(PGRN, features = c("Mertk", "Axl"), split.by = "Condition", ncol=1, pt.size = 0)
 
 
